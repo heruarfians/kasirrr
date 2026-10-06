@@ -68,13 +68,46 @@ function renderProducts() {
 
 function addToCart(productId) {
   let prod = db.products.find(p => p.id === productId);
-  let item = cart.find(c => c.id === productId);
-  if (item) {
-    item.qty++;
+  if (!prod) return;
+
+  // Cek ketersediaan stok dasar dari Google Sheets
+  let availableStock = Number(prod.stock);
+  let itemInCart = cart.find(c => c.id === productId);
+  let currentCartQty = itemInCart ? itemInCart.qty : 0;
+
+  // Validasi: Jika stok sudah 0 atau pesanan melebihi stok fisik
+  if (availableStock <= 0 || currentCartQty >= availableStock) {
+    showToastNotification(`⚠️ Stok Habis! Sisa stok untuk "${prod.name}" hanya tinggal ${availableStock} ${prod.unit}.`);
+    return;
+  }
+
+  if (itemInCart) {
+    itemInCart.qty++;
   } else {
     cart.push({ ...prod, qty: 1 });
   }
+  
+  showToastNotification(`✨ ${prod.name} berhasil ditambahkan.`);
   calculateCart();
+}
+
+// Fungsi pembantu untuk memunculkan pesan peringatan halus (Toast)
+function showToastNotification(message) {
+  let toast = document.createElement('div');
+  toast.className = 'fixed bottom-6 right-6 bg-slate-900 border border-slate-700 text-slate-200 px-5 py-3.5 rounded-xl shadow-2xl z-50 text-sm font-medium transition-all duration-300 transform translate-y-10 opacity-0';
+  toast.innerText = message;
+  document.body.appendChild(toast);
+
+  // Animasi masuk
+  setTimeout(() => {
+    toast.classList.remove('translate-y-10', 'opacity-0');
+  }, 50);
+
+  // Animasi keluar dan hapus elemen setelah 3.5 detik
+  setTimeout(() => {
+    toast.classList.add('translate-y-10', 'opacity-0');
+    setTimeout(() => toast.remove(), 300);
+  }, 3500);
 }
 
 function calculateCart() {
@@ -302,4 +335,88 @@ function playChaChingSound() {
 function handleLogout() {
   window.location.reload();
 }
+
+let trendChartInstance = null;
+let pieChartInstance = null;
+
+// Modifikasi fungsi ganti halaman bawaan agar memicu kalkulasi grafik
+const originalSwitchView = switchView;
+switchView = function(viewName) {
+  originalSwitchView(viewName);
+  if (viewName === 'reports') {
+    renderBusinessCharts();
+  }
+};
+
+function renderBusinessCharts() {
+  // 1. Data Dummy / Simulasi Penjualan (Nantinya tersinkronisasi dari data sheet transaksi)
+  const salesData =;
+  const days = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
+  
+  // Hitung total pendapatan kotor untuk kartu ringkasan atas
+  let grossTotal = salesData.reduce((a, b) => a + b, 0);
+  let hppTotal = grossTotal * 0.4; // Estimasi HPP bahan baku sebesar 40%
+  let netTotal = grossTotal - hppTotal;
+
+  document.getElementById('rep-gross').innerText = `Rp ${grossTotal.toLocaleString('id-ID')}`;
+  document.getElementById('rep-hpp').innerText = `Rp ${hppTotal.toLocaleString('id-ID')}`;
+  document.getElementById('rep-net').innerText = `Rp ${netTotal.toLocaleString('id-ID')}`;
+
+  // Hancurkan grafik lama jika sudah ada untuk menghindari tumpang tindih memori browser
+  if (trendChartInstance) trendChartInstance.destroy();
+  if (pieChartInstance) pieChartInstance.destroy();
+
+  // 2. Inisialisasi Grafik Garis Modern (Tren Penjualan)
+  const ctxTrend = document.getElementById('salesTrendChart').getContext('2d');
+  trendChartInstance = new Chart(ctxTrend, {
+    type: 'line',
+    data: {
+      labels: days,
+      datasets: [{
+        label: 'Pendapatan Harian',
+        data: salesData,
+        borderColor: '#6366f1',
+        backgroundColor: 'rgba(99, 102, 241, 0.1)',
+        borderWidth: 3,
+        fill: true,
+        tension: 0.4,
+        pointBackgroundColor: '#6366f1'
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+        x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+      }
+    }
+  });
+
+  // 3. Inisialisasi Grafik Lingkaran Modern (Kategori Produk Terlaris)
+  const ctxPie = document.getElementById('categoryPieChart').getContext('2d');
+  pieChartInstance = new Chart(ctxPie, {
+    type: 'doughnut',
+    data: {
+      labels: ['Makanan', 'Minuman/Bar', 'Paket Promo'],
+      datasets: [{
+        data:,
+        backgroundColor: ['#6366f1', '#10b981', '#f59e0b'],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: { color: '#94a3b8', font: { family: 'Plus Jakarta Sans', size: 11 } }
+        }
+      }
+    }
+  });
+}
+
 
