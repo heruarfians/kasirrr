@@ -30,16 +30,59 @@ async function syncDataFromCloud() {
   }
 }
 
+// Fungsi Masuk Sistem Kasir (Dengan Pengaman Offline/Simulasi)
 function handleLogin() {
-  // Login bypass simulasi frontend
-  currentUser = { id: "USR01", name: "Manager K.", role: "Admin/Kasir", outletId: "OUT01" };
+  const usernameInput = document.getElementById('username').value;
+  const passwordInput = document.getElementById('password').value;
+
+  // Set data pengguna aktif (Simulasi multi-staff enterprise)
+  currentUser = { 
+    id: "USR01", 
+    name: usernameInput || "Manager K.", 
+    role: "Admin/Kasir", 
+    outletId: "OUT01" 
+  };
   
-  // Sembunyikan halaman login dan munculkan dashboard utama
-  document.getElementById('login-page').classList.add('page-hidden');
-  document.getElementById('main-dashboard').classList.remove('page-hidden');
+  // Eksekusi mutlak perpindahan halaman dari login ke dashboard utama
+  const loginPage = document.getElementById('login-page');
+  const mainDashboard = document.getElementById('main-dashboard');
   
-  document.getElementById('active-user').innerText = currentUser.name;
-  syncDataFromCloud();
+  if (loginPage && mainDashboard) {
+    loginPage.classList.add('page-hidden');
+    mainDashboard.classList.remove('page-hidden');
+    
+    // Perbarui nama kasir di pojok kiri atas dashboard
+    document.getElementById('active-user').innerText = currentUser.name;
+    
+    // Pemicu prapemrosesan data cloud secara asinkronus
+    syncDataFromCloud();
+  } else {
+    alert("Elemen halaman tidak ditemukan. Periksa kembali ID elemen pada HTML Anda.");
+  }
+}
+
+// Fungsi Interaktif Lihat / Sembunyikan Password
+function togglePasswordVisibility() {
+  const passwordField = document.getElementById('password');
+  const eyeIcon = document.getElementById('eye-icon');
+  
+  if (!passwordField) return;
+  
+  if (passwordField.type === "password") {
+    passwordField.type = "text";
+    // Ubah ikon mata menjadi mata tercoret (Metode SVG murni)
+    eyeIcon.innerHTML = `
+      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+      <line x1="1" y1="1" x2="23" y2="23"></line>
+    `;
+  } else {
+    passwordField.type = "password";
+    // Kembalikan ke ikon mata normal
+    eyeIcon.innerHTML = `
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+      <circle cx="12" cy="12" r="3"></circle>
+    `;
+  }
 }
 
 function switchView(viewName) {
