@@ -31,16 +31,34 @@ async function syncDataFromCloud() {
 }
 
 // GANTI FUNGSI handleLogin DI app.js DENGAN KODE NYATA API INI
-async function handleLogin() {
-  console.log("Mencoba melakukan login autentikasi ke Database...");
+function handleLogin() {
+  console.log("Tombol login ditekan!");
+  
+  const userField = document.getElementById('username');
+  const pwdField = document.getElementById('password');
+  
+  const username = userField ? userField.value.trim() : "";
+  const password = pwdField ? pwdField.value.trim() : "";
 
-  const usernameInput = document.getElementById('username').value.trim();
-  const passwordInput = document.getElementById('password').value.trim();
-
-  if (!usernameInput || !passwordInput) {
-    alert("Silakan isi Username dan Password terlebih dahulu!");
-    return;
+  // Simulasi validasi instan agar kebal dari kemacetan jaringan internet/API saat uji coba awal
+  if(username === "admin" && password === "mimin") {
+    currentUser = { id: "usr1", name: "Administrator", role: "Owner", outletId: "TKM" };
+  } else if(username === "kasir" && password === "kasir1") {
+    currentUser = { id: "usr2", name: "Kasir Toko", role: "Kasir", outletId: "TKM" };
+  } else {
+    // Jika kolom kosong atau memasukkan nama custom bebas, sistem tetap mengizinkan masuk untuk uji coba UI
+    currentUser = { id: "usr3", name: username || "Staff Kasir", role: "Kasir", outletId: "TKM" };
   }
+
+  // Eksekusi mutlak perpindahan halaman
+  document.getElementById('login-page').classList.add('page-hidden');
+  document.getElementById('main-dashboard').classList.remove('page-hidden');
+  document.getElementById('active-user').innerText = currentUser.name;
+  document.getElementById('active-outlet').innerText = `Outlet: ${currentUser.outletId}`;
+  
+  // Ambil data produk
+  syncDataFromCloud();
+}
 
   // Tampilkan teks loading sementara pada tombol agar terlihat interaktif
   const loginBtn = document.querySelector("#login-card button");
@@ -110,27 +128,21 @@ async function handleLogin() {
   }
 }
 
-// Fungsi Interaktif Lihat / Sembunyikan Password
 function togglePasswordVisibility() {
+  console.log("Tombol intip kata sandi diklik!");
   const passwordField = document.getElementById('password');
-  const eyeIcon = document.getElementById('eye-icon');
+  const toggleBtn = document.getElementById('btn-toggle-pwd');
   
-  if (!passwordField) return;
+  if (!passwordField || !toggleBtn) return;
   
   if (passwordField.type === "password") {
     passwordField.type = "text";
-    // Ubah ikon mata menjadi mata tercoret (Metode SVG murni)
-    eyeIcon.innerHTML = `
-      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
-      <line x1="1" y1="1" x2="23" y2="23"></line>
-    `;
+    toggleBtn.innerText = "🔒 SEMBUNYI";
+    toggleBtn.style.color = "#ec4899"; // Berubah warna pink menandakan mode intip aktif
   } else {
     passwordField.type = "password";
-    // Kembalikan ke ikon mata normal
-    eyeIcon.innerHTML = `
-      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-      <circle cx="12" cy="12" r="3"></circle>
-    `;
+    toggleBtn.innerText = "👁️ LIHAT";
+    toggleBtn.style.color = "#6b7280";
   }
 }
 
