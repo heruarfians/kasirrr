@@ -19,6 +19,50 @@
   --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Aturan Khusus Halaman Login Agar Sempurna di Tengah */
+#login-page {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 100vh !important; /* Memaksa tinggi setara layar HP/PC */
+  width: 100vw !important;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Membatasi lebar kotak login agar tidak memanjang ke samping */
+#login-card {
+  width: 100% !important;
+  max-width: 400px !important; /* Ukuran standar kotak login premium */
+  padding: 32px !important;
+  background-color: var(--panel-bg) !important;
+  border: 1px solid var(--panel-border) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7) !important;
+}
+
+/* Merapikan jarak antar input di dalam kotak login */
+.login-field-group {
+  margin-bottom: 20px;
+}
+
+.login-field-group label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.login-field-group input {
+  width: 100% !important;
+  padding: 12px 16px !important;
+  box-sizing: border-box;
+}
+
+
 /* Base Body Setup */
 body {
   font-family: 'Plus Jakarta Sans', sans-serif !important;
