@@ -1,157 +1,188 @@
 /* ==========================================
-   OMNIPOS RETRO POP / 80s ARCADE STYLESHEET
+   KASIRRRPOS PREMIUM MODERN & SLEEK UX STYLESHEET
    ========================================== */
 
 @import url('https://googleapis.com');
 
 :root {
-  --retro-bg: #120e2e;          /* Ungu Gelap khas Arcade */
-  --retro-panel: #1a153a;       /* Panel Box */
-  --retro-border: #00ffff;      /* Neon Cyan */
-  --retro-accent-pink: #ff007f; /* Neon Pink */
-  --retro-accent-yellow: #fff300;/* Neon Kuning */
-  --retro-accent-green: #39ff14; /* Neon Hijau */
-  --retro-text: #ffffff;
-  --retro-shadow: 4px 4px 0px #000000;
-  --retro-shadow-pink: 4px 4px 0px var(--retro-accent-pink);
-  --retro-shadow-cyan: 4px 4px 0px var(--retro-border);
+  --app-bg: #090d16;           /* Deep Midnight Blue (Sangat Elegan) */
+  --panel-bg: rgba(20, 27, 45, 0.7); /* Transparansi Kaca */
+  --panel-border: rgba(255, 255, 255, 0.06); /* Border Tipis Modern */
+  --accent-color: #6366f1;     /* Royal Indigo */
+  --accent-gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  --success-color: #10b981;    /* Emerald Mint */
+  --text-primary: #f8fafc;     /* Clean White */
+  --text-secondary: #94a3b8;   /* Muted Slate */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Base Body Override */
+/* Base Body Setup */
 body {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  background-color: var(--retro-bg) !important;
-  background-image: 
-    linear-gradient(rgba(18, 14, 46, 0.95), rgba(18, 14, 46, 0.95)),
-    linear-gradient(to right, #2a2050 1px, transparent 1px),
-    linear-gradient(to bottom, #2a2050 1px, transparent 1px);
-  background-size: 40px 40px; /* Efek Grid Synthwave */
-  color: var(--retro-text) !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  background-color: var(--app-bg) !important;
+  color: var(--text-primary) !important;
+  letter-spacing: -0.01em;
 }
 
-/* Typography Retro Headings */
-h1, h2, h3, h4, .font-extrabold, .font-black {
-  font-family: 'Space Grotesk', sans-serif !important;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-/* Modifikasi Desain Box & Kartu (Brutalisme Retro) */
+/* Kustomisasi Panel Dashboard & Kartu (Glassmorphism Effect) */
 .bg-slate-800, .bg-slate-900, .bg-slate-850, .bg-slate-950 {
-  background-color: var(--retro-panel) !important;
-  border: 3px solid #000000 !important;
-  box-shadow: var(--retro-shadow) !important;
-  border-radius: 0px !important; /* Sudut kotak patah khas retro komputer */
+  background-color: var(--panel-bg) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--panel-border) !important;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5) !important;
+  border-radius: var(--radius-md) !important;
 }
 
-/* Efek Hover Pada Grid Produk */
+/* Desain Grid Produk & Menu QR Kekinian */
 #product-grid > div, #menu-grid > div {
-  background-color: var(--retro-panel) !important;
-  border: 3px solid #000000 !important;
-  box-shadow: var(--retro-shadow) !important;
-  border-radius: 0px !important;
-  transition: all 0.15s ease-in-out;
+  background-color: rgba(255, 255, 255, 0.02) !important;
+  border: 1px solid var(--panel-border) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: none !important;
+  transition: var(--transition-smooth);
 }
 
 #product-grid > div:hover, #menu-grid > div:hover {
-  transform: translate(-2px, -2px);
-  border-color: var(--retro-accent-pink) !important;
-  box-shadow: 6px 6px 0px #000000 !important;
+  transform: translateY(-4px);
+  background-color: rgba(255, 255, 255, 0.04) !important;
+  border-color: rgba(99, 102, 241, 0.4) !important;
+  box-shadow: 0 12px 20px -8px rgba(99, 102, 241, 0.15) !important;
 }
 
-/* Desain Tombol Bergaya Kartun/Koleksi Game Lama */
+/* Ilustrasi Gambar Produk Sementara */
+#product-grid > div .h-24, #menu-grid > div .h-24 {
+  background-color: rgba(255, 255, 255, 0.03) !important;
+  border-radius: var(--radius-sm) !important;
+  color: var(--text-secondary);
+}
+
+/* Desain Tombol Premium & Interaktif */
 button {
-  font-family: 'Space Grotesk', sans-serif !important;
-  text-transform: uppercase;
-  font-weight: 700 !important;
-  border: 3px solid #000000 !important;
-  box-shadow: var(--retro-shadow) !important;
-  border-radius: 0px !important;
-  transition: all 0.1s ease;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  text-transform: none !important;
+  font-weight: 600 !important;
+  border: 1px solid transparent !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  border-radius: var(--radius-sm) !important;
+  transition: var(--transition-smooth);
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
 }
 
 button:active {
-  transform: translate(3px, 3px);
-  box-shadow: 1px 1px 0px #000000 !important;
+  transform: translateY(1px);
 }
 
-/* Kustomisasi Warna Tombol Spesifik */
-.bg-indigo-600 { background-color: var(--retro-accent-pink) !important; color: white !important; }
-.bg-indigo-600:hover { background-color: #e0006c !important; }
+/* Variasi Warna Tombol Modern */
+.bg-indigo-600 {
+  background: var(--accent-gradient) !important;
+  color: #ffffff !important;
+}
+.bg-indigo-600:hover {
+  opacity: 0.95;
+}
 
-.bg-emerald-600 { background-color: var(--retro-accent-green) !important; color: #000000 !important; }
-.bg-emerald-600:hover { background-color: #2cdc0f !important; }
+.bg-emerald-600 {
+  background-color: var(--success-color) !important;
+  color: #ffffff !important;
+}
+.bg-emerald-600:hover {
+  background-color: #059669 !important;
+}
 
-.bg-slate-700 { background-color: #251f4f !important; color: white !important; }
+.bg-slate-700 {
+  background-color: rgba(255, 255, 255, 0.06) !important;
+  color: var(--text-primary) !important;
+}
+.bg-slate-700:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
 
-/* Desain Kolom Input & Dropdown */
+/* Form Input & Dropdown Minimalis */
 input[type="text"], input[type="password"], select {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  background-color: #0f0b25 !important;
-  border: 3px solid #000000 !important;
-  border-radius: 0px !important;
-  color: #ffffff !important;
-  box-shadow: inset 2px 2px 0px #000000;
+  background-color: rgba(0, 0, 0, 0.2) !important;
+  border: 1px solid var(--panel-border) !important;
+  border-radius: var(--radius-sm) !important;
+  color: var(--text-primary) !important;
+  box-shadow: none !important;
+  transition: var(--transition-smooth);
 }
 
 input[type="text"]:focus, input[type="password"]:focus, select:focus {
-  border-color: var(--retro-border) !important;
+  border-color: var(--accent-color) !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15) !important;
   outline: none;
 }
 
-/* Judul Logo Berpendar (Neon Glow) */
+/* Judul Logo & Aksen Teks Finansial */
 .text-indigo-500 {
-  color: var(--retro-accent-yellow) !important;
-  text-shadow: 3px 3px 0px var(--retro-accent-pink);
+  color: var(--text-primary) !important;
+  background: linear-gradient(120deg, #fff, #94a3b8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none !important;
 }
 
-/* Teks Harga & Angka */
-.text-indigo-400, .text-emerald-400, #txt-total, #cart-total {
-  color: var(--retro-accent-yellow) !important;
-  font-family: 'Space Grotesk', sans-serif;
+.text-indigo-400, #txt-total, #cart-total {
+  color: #a5b4fc !important; /* Soft Lavender Blue */
 }
 
-/* Badge Kategori Menu */
+.text-emerald-400, #rep-net {
+  color: #34d399 !important; /* Mint Soft */
+}
+
+/* Kategori Pilihan Menu (Soft Capsule Badge) */
 .rounded-full {
-  border-radius: 0px !important;
-  border: 2px solid #000000 !important;
+  border-radius: var(--radius-lg) !important;
+  border: 1px solid var(--panel-border) !important;
+  transition: var(--transition-smooth);
 }
 
-/* Garis Putus-putus Nota */
+/* Garis Pembatas Nota */
 .border-dashed {
-  border-style: dashed !important;
-  border-width: 2px !important;
-  border-color: #000000 !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
 }
 
-/* Mempercantik Scrollbar Jadul */
+/* Desain Pop-Up Struk Belanja Minimalis Elegan */
+#receipt-modal > div {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-radius: var(--radius-md) !important;
+  border: 1px solid rgba(0, 0, 0, 0.05) !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+}
+#receipt-modal button {
+  border-radius: var(--radius-sm) !important;
+}
+
+/* Smooth Scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--retro-bg);
-  border-left: 3px solid #000000;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--retro-accent-pink);
-  border: 2px solid #000000;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
 }
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Aturan Cetak Kertas */
 @media print {
-  body * {
-    visibility: hidden;
-  }
-  #receipt-modal, #receipt-modal * {
-    visibility: visible;
-  }
-  #receipt-modal {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    background: white !important;
-  }
-  #receipt-modal button {
-    display: none !important; /* Sembunyikan tombol cetak di kertas print asli */
-  }
+  body * { visibility: hidden; }
+  #receipt-modal, #receipt-modal * { visibility: visible; }
+  #receipt-modal { position: absolute; left: 0; top: 0; width: 100%; box-shadow: none !important; }
+  #receipt-modal button { display: none !important; }
 }
