@@ -150,6 +150,8 @@ async function processPayment(method) {
   if(cart.length === 0) return alert("Keranjang masih kosong");
   let txId = "TX" + Date.now();
   let totalText = document.getElementById('txt-total').innerText;
+  let subtotalText = document.getElementById('txt-subtotal').innerText;
+  let discountText = document.getElementById('txt-discount').innerText;
 
   let payload = {
     action: "save_transaction",
@@ -162,16 +164,88 @@ async function processPayment(method) {
     paymentMethod: method
   };
 
-  // Simpan ke Google Sheets via REST API
-  await fetch(API_URL, {
-    method: "POST",
-    body: JSON.stringify(payload)
-  });
+  // 1. Bunyikan efek suara "Cha-Ching!" arcade
+  playChaChingSound();
 
-  alert(`Transaksi ${txId} Berhasil Disimpan ke Cloud!`);
-  sendWhatsAppReceipt("628123456789", txId, totalText); // Contoh trigger WA otomatis
+  // 2. Tampilkan Struk Belanja Retro Hitam-Putih di Layar (Print Preview)
+  renderRetroReceipt(txId, method, subtotalText, discountText, totalText);
+
+  // 3. Simpan ke Google Sheets via REST API (Berjalan di latar belakang)
+  try {
+    fetch(API_URL, {
+      method: "POST",
+      body: JSON.stringify(payload)
+    });
+  } catch(e) {
+    console.error("Gagal sinkronisasi transaksi ke cloud:", e);
+  }
+
+  // 4. Reset Keranjang Belanja
   cart = [];
   calculateCart();
+}
+
+// Fungsi Membuat Layout Struk Kasir Dot-Matrix Jadul
+function renderRetroReceipt(txId, method, subtotal, discount, total) {
+  // Cek jika modal struk lama sudah ada, hapus dahulu
+  let oldModal = document.getElementById('receipt-modal');
+  if(oldModal) oldModal.remove();
+
+  // Susun manifest baris belanjaan
+  let itemsHtml = cart.map(item => {
+    let namaBarang = item.name.padEnd(20, ' ').substring(0, 20);
+    let qtyHarga = `${item.qty}x${Number(item.price).toLocaleString('id-ID')}`;
+    let totalItem = (item.qty * Number(item.price)).toLocaleString('id-ID');
+    return `<div class="flex justify-between"><span>${namaBarang}</span><span>${totalItem}</span></div><div class="text-xs text-slate-600 pl-2">${qtyHarga}</div>`;
+  }).join('');
+
+  // Buat element modal struk popup layar
+  let modal = document.createElement('div');
+  modal.id = 'receipt-modal';
+  modal.className = 'fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4';
+  modal.innerHTML = `
+    <div class="bg-white text-black p-6 w-full max-w-sm font-mono border-4 border-black shadow-[8px_8px_0px_#000] space-y-4">
+      <div class="text-center border-b-2 border-dashed border-black pb-2">
+        <h3 class="text-lg font-black tracking-widest">=== OMNIPOS ===</h3>
+        <p class="text-xs">RETRO ARCADE STATION</p>
+        <p class="text-[10px] text-slate-700">${new Date().toLocaleString('id-ID')}</p>
+      </div>
+      
+      <div class="text-xs space-y-1">
+        <p>ID NOTA : #${txId}</p>
+        <p>KASIR   : ${currentUser.name}</p>
+        <p>METODE  : ${method}</p>
+      </div>
+      
+      <div class="border-b-2 border-dashed border-black py-2 space-y-1 text-xs">
+        ${itemsHtml}
+      </div>
+      
+      <div class="text-xs space-y-1 pt-1">
+        <div class="flex justify-between"><span>SUBTOTAL</span><span>${subtotal}</span></div>
+        <div class="flex justify-between text-slate-700"><span>POTONGAN</span><span>${discount}</span></div>
+        <div class="flex justify-between font-bold text-sm pt-1 border-t border-black"><span>TOTAL</span><span>${total}</span></div>
+      </div>
+      
+      <div class="text-center text-[10px] pt-4 border-t border-dashed border-black">
+        <p>TERIMA KASIH TELAH BERBELANJA</p>
+        <p>*** LAYANAN DIGITAL ENTERPRISE ***</p>
+      </div>
+
+      <div class="pt-2 flex space-x-2">
+        <button onclick="window.print()" class="flex-1 bg-black text-white text-xs py-2 font-bold hover:bg-slate-800 border-0">🖨️ Cetak Struk</button>
+        <button onclick="document.getElementById('receipt-modal').remove()" class="flex-1 bg-slate-200 text-black text-xs py-2 font-bold hover:bg-slate-300 border-2 border-black">Tutup</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+
+  // Jika printer thermal bluetooth aktif terhubung, kirim raw text ke hardware device
+  if (bluetoothCharacteristic) {
+    let rawText = `=== OMNIPOS ===\nID: #${txId}\nTotal: ${total}\n================\nTERIMA KASIH\n\n\n`;
+    let encoder = new TextEncoder();
+    bluetoothCharacteristic.writeValue(encoder.encode(rawText));
+  }
 }
 
 function exportToExcel(tableId) {
@@ -180,6 +254,42 @@ function exportToExcel(tableId) {
   XLSX.writeFile(wb, `Laporan_OmniPOS_${Date.now()}.xlsx`);
 }
 
+function playChaChingSound() {
+  const AudioContext = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContext) return;
+  
+  const ctx = new AudioContext();
+  
+  // Suara Koin 1 (Nada Rendah)
+  let osc1 = ctx.createOscillator();
+  let gain1 = ctx.createGain();
+  osc1.type = 'sine';
+  osc1.frequency.setValueAtTime(850, ctx.currentTime); // Nada dasar koin
+  osc1.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.08);
+  gain1.gain.setValueAtTime(0.3, ctx.currentTime);
+  gain1.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
+  osc1.connect(gain1);
+  gain1.connect(ctx.destination);
+  
+  // Suara Koin 2 (Nada Tinggi Khas Kasir)
+  let osc2 = ctx.createOscillator();
+  let gain2 = ctx.createGain();
+  osc2.type = 'triangle';
+  osc2.frequency.setValueAtTime(1500, ctx.currentTime + 0.05); // Jeda sedikit agar bergemerincing
+  osc2.frequency.exponentialRampToValueAtTime(2200, ctx.currentTime + 0.15);
+  gain2.gain.setValueAtTime(0.2, ctx.currentTime + 0.05);
+  gain2.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
+  osc2.connect(gain2);
+  gain2.connect(ctx.destination);
+  
+  // Jalankan Synth Koin Arcade
+  osc1.start(ctx.currentTime);
+  osc1.stop(ctx.currentTime + 0.15);
+  osc2.start(ctx.currentTime + 0.05);
+  osc2.stop(ctx.currentTime + 0.4);
+}
+
 function handleLogout() {
   window.location.reload();
 }
+

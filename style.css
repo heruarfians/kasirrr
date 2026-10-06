@@ -137,3 +137,21 @@ input[type="text"]:focus, input[type="password"]:focus, select:focus {
   background: var(--retro-accent-pink);
   border: 2px solid #000000;
 }
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #receipt-modal, #receipt-modal * {
+    visibility: visible;
+  }
+  #receipt-modal {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background: white !important;
+  }
+  #receipt-modal button {
+    display: none !important; /* Sembunyikan tombol cetak di kertas print asli */
+  }
+}
