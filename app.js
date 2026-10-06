@@ -31,17 +31,27 @@ async function syncDataFromCloud() {
 }
 
 function handleLogin() {
-  // Demo auth bypass untuk simulasi frontend cepat, validasi aslinya dilempar ke Apps Script doPost
+  // Login bypass simulasi frontend
   currentUser = { id: "USR01", name: "Manager K.", role: "Admin/Kasir", outletId: "OUT01" };
-  document.getElementById('login-page').classList.add('hidden');
-  document.getElementById('main-dashboard').classList.remove('hidden');
+  
+  // Sembunyikan halaman login dan munculkan dashboard utama
+  document.getElementById('login-page').classList.add('page-hidden');
+  document.getElementById('main-dashboard').classList.remove('page-hidden');
+  
   document.getElementById('active-user').innerText = currentUser.name;
   syncDataFromCloud();
 }
 
 function switchView(viewName) {
-  ['view-pos', 'view-inventory', 'view-reports'].forEach(v => document.getElementById(v).classList.add('hidden'));
-  document.getElementById(`view-${viewName}`).classList.remove('hidden');
+  // Sembunyikan semua views terlebih dahulu
+  ['view-pos', 'view-inventory', 'view-reports'].forEach(v => {
+    let el = document.getElementById(v);
+    if(el) el.classList.add('page-hidden');
+  });
+  
+  // Tampilkan view yang dipilih
+  let activeEl = document.getElementById(`view-${viewName}`);
+  if(activeEl) activeEl.classList.remove('page-hidden');
 }
 
 function renderProducts() {
