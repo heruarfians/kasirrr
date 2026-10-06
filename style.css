@@ -186,3 +186,14 @@ input[type="text"]:focus, input[type="password"]:focus, select:focus {
   #receipt-modal { position: absolute; left: 0; top: 0; width: 100%; box-shadow: none !important; }
   #receipt-modal button { display: none !important; }
 }
+
+/* Aturan Mutlak untuk Manajemen Halaman (SPA) */
+.page-hidden {
+  display: none !important;
+}
+
+/* Memperbaiki tata letak agar halaman login dan dashboard terpisah rapi */
+#login-page, #main-dashboard {
+  width: 100%;
+}
+
