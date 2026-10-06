@@ -241,3 +241,10 @@ input[type="text"]:focus, input[type="password"]:focus, select:focus {
   width: 100%;
 }
 
+/* Efek Transisi Pop Up Notifikasi Stok */
+.opacity-0 {
+  opacity: 0 !important;
+}
+.translate-y-10 {
+  transform: translateY(40px) !important;
+}
