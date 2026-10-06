@@ -21,19 +21,30 @@
       <p class="text-xs text-slate-400 mt-2">Masuk ke sistem Smart Kasir</p>
     </div>
     
-    <div class="space-y-2">
+    <div class="space-y-4">
       <div class="login-field-group">
         <label>Username / ID Karyawan</label>
-        <input type="text" id="username" placeholder="Masukkan username...">
+        <input type="text" id="username" placeholder="Masukkan username..." class="w-full">
       </div>
       
       <div class="login-field-group">
         <label>Password</label>
-        <input type="password" id="password" placeholder="••••••••">
+        <!-- Wrapper input password dengan ikon mata kekinian -->
+        <div style="position: relative; width: 100%;">
+          <input type="password" id="password" placeholder="••••••••" class="w-full" style="padding-right: 45px !important;">
+          <button type="button" onclick="togglePasswordVisibility()" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none !important; border: none !important; box-shadow: none !important; cursor: pointer; padding: 0; color: #6b7280; width: auto !important;">
+            <!-- Ikon Mata Menggunakan Karakter SVG yang Ringan & Kompatibel -->
+            <svg id="eye-icon" xmlns="http://w3.org" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+          </button>
+        </div>
       </div>
       
-      <button onclick="handleLogin()" class="w-full bg-indigo-600 text-white p-3 rounded-lg font-bold hover:opacity-90 transition mt-4">
-        Masuk Sistem
+      <!-- Tombol Masuk yang Diperkuat Aksinya -->
+      <button onclick="handleLogin()" class="w-full bg-indigo-600 text-white p-3 rounded-lg font-bold hover:opacity-90 transition mt-6" style="display: block !important;">
+        MASUK SISTEM
       </button>
     </div>
   </div>
