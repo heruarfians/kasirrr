@@ -1,0 +1,139 @@
+/* ==========================================
+   OMNIPOS RETRO POP / 80s ARCADE STYLESHEET
+   ========================================== */
+
+@import url('https://googleapis.com');
+
+:root {
+  --retro-bg: #120e2e;          /* Ungu Gelap khas Arcade */
+  --retro-panel: #1a153a;       /* Panel Box */
+  --retro-border: #00ffff;      /* Neon Cyan */
+  --retro-accent-pink: #ff007f; /* Neon Pink */
+  --retro-accent-yellow: #fff300;/* Neon Kuning */
+  --retro-accent-green: #39ff14; /* Neon Hijau */
+  --retro-text: #ffffff;
+  --retro-shadow: 4px 4px 0px #000000;
+  --retro-shadow-pink: 4px 4px 0px var(--retro-accent-pink);
+  --retro-shadow-cyan: 4px 4px 0px var(--retro-border);
+}
+
+/* Base Body Override */
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: var(--retro-bg) !important;
+  background-image: 
+    linear-gradient(rgba(18, 14, 46, 0.95), rgba(18, 14, 46, 0.95)),
+    linear-gradient(to right, #2a2050 1px, transparent 1px),
+    linear-gradient(to bottom, #2a2050 1px, transparent 1px);
+  background-size: 40px 40px; /* Efek Grid Synthwave */
+  color: var(--retro-text) !important;
+}
+
+/* Typography Retro Headings */
+h1, h2, h3, h4, .font-extrabold, .font-black {
+  font-family: 'Space Grotesk', sans-serif !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Modifikasi Desain Box & Kartu (Brutalisme Retro) */
+.bg-slate-800, .bg-slate-900, .bg-slate-850, .bg-slate-950 {
+  background-color: var(--retro-panel) !important;
+  border: 3px solid #000000 !important;
+  box-shadow: var(--retro-shadow) !important;
+  border-radius: 0px !important; /* Sudut kotak patah khas retro komputer */
+}
+
+/* Efek Hover Pada Grid Produk */
+#product-grid > div, #menu-grid > div {
+  background-color: var(--retro-panel) !important;
+  border: 3px solid #000000 !important;
+  box-shadow: var(--retro-shadow) !important;
+  border-radius: 0px !important;
+  transition: all 0.15s ease-in-out;
+}
+
+#product-grid > div:hover, #menu-grid > div:hover {
+  transform: translate(-2px, -2px);
+  border-color: var(--retro-accent-pink) !important;
+  box-shadow: 6px 6px 0px #000000 !important;
+}
+
+/* Desain Tombol Bergaya Kartun/Koleksi Game Lama */
+button {
+  font-family: 'Space Grotesk', sans-serif !important;
+  text-transform: uppercase;
+  font-weight: 700 !important;
+  border: 3px solid #000000 !important;
+  box-shadow: var(--retro-shadow) !important;
+  border-radius: 0px !important;
+  transition: all 0.1s ease;
+}
+
+button:active {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0px #000000 !important;
+}
+
+/* Kustomisasi Warna Tombol Spesifik */
+.bg-indigo-600 { background-color: var(--retro-accent-pink) !important; color: white !important; }
+.bg-indigo-600:hover { background-color: #e0006c !important; }
+
+.bg-emerald-600 { background-color: var(--retro-accent-green) !important; color: #000000 !important; }
+.bg-emerald-600:hover { background-color: #2cdc0f !important; }
+
+.bg-slate-700 { background-color: #251f4f !important; color: white !important; }
+
+/* Desain Kolom Input & Dropdown */
+input[type="text"], input[type="password"], select {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: #0f0b25 !important;
+  border: 3px solid #000000 !important;
+  border-radius: 0px !important;
+  color: #ffffff !important;
+  box-shadow: inset 2px 2px 0px #000000;
+}
+
+input[type="text"]:focus, input[type="password"]:focus, select:focus {
+  border-color: var(--retro-border) !important;
+  outline: none;
+}
+
+/* Judul Logo Berpendar (Neon Glow) */
+.text-indigo-500 {
+  color: var(--retro-accent-yellow) !important;
+  text-shadow: 3px 3px 0px var(--retro-accent-pink);
+}
+
+/* Teks Harga & Angka */
+.text-indigo-400, .text-emerald-400, #txt-total, #cart-total {
+  color: var(--retro-accent-yellow) !important;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+/* Badge Kategori Menu */
+.rounded-full {
+  border-radius: 0px !important;
+  border: 2px solid #000000 !important;
+}
+
+/* Garis Putus-putus Nota */
+.border-dashed {
+  border-style: dashed !important;
+  border-width: 2px !important;
+  border-color: #000000 !important;
+}
+
+/* Mempercantik Scrollbar Jadul */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--retro-bg);
+  border-left: 3px solid #000000;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--retro-accent-pink);
+  border: 2px solid #000000;
+}
