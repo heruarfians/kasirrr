@@ -2,22 +2,13 @@
    KASIRRRPOS PREMIUM MODERN & LIGHT UX STYLESHEET
    ========================================== */
 
+/* Pastikan tautan font di bawah ini tertulis lengkap dan benar */
 @import url('https://googleapis.com');
 
 :root {
-  --app-bg: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%); /* Cerah Bersih & Mempesona */
-  --panel-bg: rgba(255, 255, 255, 0.75); /* Kaca Transparan Cerah */
-  --panel-border: rgba(255, 255, 255, 0.6); /* Border Putih Berpendar */
-  --accent-color: #6366f1;     /* Royal Indigo */
-  --accent-gradient: linear-gradient(135deg, #6366f1 0%, #ec4899 100%); /* Gradasi Violet & Pink */
-  --success-color: #10b981;    /* Emerald Mint */
-  --text-primary: #1f2937;     /* Gelap Kontras (Mudah Dibaca) */
-  --text-secondary: #6b7280;   /* Muted Gray */
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 20px;
-  --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
+  --app-bg: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+  --panel-bg: rgba(255, 255, 255, 0.75);
+...
 
 /* Base Body Setup */
 body {
