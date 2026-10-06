@@ -12,26 +12,31 @@
 </head>
 <body class="bg-slate-900 text-slate-100 font-sans antialiased">
 
-  <!-- 1. HALAMAN LOGIN -->
-  <div id="login-page" class="flex min-h-screen items-center justify-center px-4">
-    <div class="w-full max-w-md space-y-6 rounded-2xl bg-slate-800 p-8 shadow-xl border border-slate-700">
-      <div class="text-center">
-        <h2 class="text-3xl font-extrabold text-indigo-500">KASIRRR</h2>
-        <p class="text-sm text-slate-400 mt-2">Masuk ke sistem Smart Kasirrr</p>
+	<!-- 1. HALAMAN LOGIN -->
+<div id="login-page">
+  <div id="login-card">
+    <div class="text-center mb-8">
+      <h2 class="text-3xl font-extrabold text-indigo-500 tracking-tight">KASIRRR</h2>
+      <p class="text-xs text-slate-400 mt-2">Masuk ke sistem Smart Kasir</p>
+    </div>
+    
+    <div class="space-y-2">
+      <div class="login-field-group">
+        <label>Username / ID Karyawan</label>
+        <input type="text" id="username" placeholder="Masukkan username...">
       </div>
-      <div class="space-y-4">
-        <div>
-          <label class="text-xs font-semibold text-slate-400">Username / ID Karyawan</label>
-          <input type="text" id="username" class="w-full mt-1 rounded-lg bg-slate-700 p-3 text-white border border-slate-600 focus:outline-none focus:border-indigo-500">
-        </div>
-        <div>
-          <label class="text-xs font-semibold text-slate-400">Password</label>
-          <input type="password" id="password" class="w-full mt-1 rounded-lg bg-slate-700 p-3 text-white border border-slate-600 focus:outline-none focus:border-indigo-500">
-        </div>
-        <button onclick="handleLogin()" class="w-full rounded-lg bg-indigo-600 p-3 font-bold hover:bg-indigo-500 transition">Masuk</button>
+      
+      <div class="login-field-group">
+        <label>Password</label>
+        <input type="password" id="password" placeholder="••••••••">
       </div>
+      
+      <button onclick="handleLogin()" class="w-full bg-indigo-600 text-white p-3 rounded-lg font-bold hover:opacity-90 transition mt-4">
+        Masuk Sistem
+      </button>
     </div>
   </div>
+</div>
 
   <!-- 2. DASHBOARD UTAMA & KASIR (Akan muncul setelah login) -->
   <div id="main-dashboard" class="page-hidden flex h-screen overflow-hidden">
