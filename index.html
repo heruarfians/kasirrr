@@ -3,196 +3,225 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kasirrr Enter-price</title>
-	<link rel="stylesheet" href="style.css">
+  <title>OmniPos Enterprise</title>
   <link rel="manifest" href="manifest.json">
-  <script src="https://jsdelivr.net"></script>
   <script src="https://tailwindcss.com"></script>
-  <script src="https://jsdelivr.net"></script>
   <script src="https://cloudflare.com"></script>
-</head>
-<body class="bg-slate-900 text-slate-100 font-sans antialiased">
+  <script src="https://jsdelivr.net"></script>
 
-	<!-- 1. HALAMAN LOGIN -->
-<div id="login-page">
-  <div id="login-card">
-    <div class="text-center mb-8">
-      <h2 class="text-3xl font-extrabold text-indigo-500 tracking-tight">KASIRRR</h2>
-      <p class="text-xs text-slate-400 mt-2">Masuk ke sistem Smart Kasir</p>
-    </div>
-    
-    <div class="space-y-4">
-      <div class="login-field-group">
-        <label>Username / ID Karyawan</label>
-        <input type="text" id="username" placeholder="Masukkan username..." class="w-full">
+  <!-- STYLE KEKINIAN & CERAH MEMPESONA (DISATUKAN AGAR ANTI-GAGAL) -->
+  <style>
+    @import url('https://googleapis.com');
+
+    :root {
+      --app-bg: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+      --panel-bg: rgba(255, 255, 255, 0.85);
+      --panel-border: rgba(255, 255, 255, 0.6);
+      --accent-color: #6366f1;
+      --accent-gradient: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+      --success-color: #10b981;
+      --text-primary: #1f2937;
+      --text-secondary: #6b7280;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif !important;
+      background: var(--app-bg) !important;
+      color: var(--text-primary) !important;
+      letter-spacing: -0.01em;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    #login-page {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      min-height: 100vh !important;
+      width: 100vw !important;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    #login-card {
+      width: 100% !important;
+      max-width: 400px !important;
+      padding: 32px !important;
+      background-color: var(--panel-bg) !important;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--panel-border) !important;
+      border-radius: var(--radius-md) !important;
+      box-shadow: 0 20px 40px -15px rgba(31, 41, 55, 0.1) !important;
+      box-sizing: border-box;
+    }
+
+    .login-field-group {
+      margin-bottom: 20px;
+      width: 100%;
+    }
+
+    .login-field-group label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .login-field-group input {
+      width: 100% !important;
+      padding: 12px 16px !important;
+      box-sizing: border-box !important;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #ffffff !important;
+      border: 1px solid rgba(0, 0, 0, 0.1) !important;
+      border-radius: var(--radius-sm) !important;
+      color: var(--text-primary) !important;
+      transition: var(--transition-smooth);
+    }
+
+    .login-field-group input:focus {
+      border-color: var(--accent-color) !important;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12) !important;
+      outline: none;
+    }
+
+    .bg-slate-800, .bg-slate-900, .bg-slate-850, .bg-slate-950 {
+      background-color: var(--panel-bg) !important;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--panel-border) !important;
+      box-shadow: 0 10px 25px -5px rgba(31, 41, 55, 0.05) !important;
+      border-radius: var(--radius-md) !important;
+    }
+
+    #product-grid > div, #menu-grid > div {
+      background-color: rgba(255, 255, 255, 0.5) !important;
+      border: 1px solid var(--panel-border) !important;
+      border-radius: var(--radius-md) !important;
+      transition: var(--transition-smooth);
+    }
+
+    #product-grid > div:hover, #menu-grid > div:hover {
+      transform: translateY(-4px);
+      background-color: #ffffff !important;
+      border-color: rgba(99, 102, 241, 0.3) !important;
+      box-shadow: 0 12px 25px -8px rgba(99, 102, 241, 0.12) !important;
+    }
+
+    button {
+      font-family: 'Plus Jakarta Sans', sans-serif !important;
+      font-weight: 600 !important;
+      transition: var(--transition-smooth);
+    }
+
+    button:hover { transform: translateY(-1px); }
+    button:active { transform: translateY(1px); }
+
+    .bg-indigo-600 {
+      background: var(--accent-gradient) !important;
+      color: #ffffff !important;
+    }
+
+    .bg-emerald-600 { background-color: var(--success-color) !important; color: #ffffff !important; }
+    .text-indigo-400, #txt-total, #cart-total { color: #4f46e5 !important; font-weight: 700; }
+    .text-emerald-400, #rep-net { color: #047857 !important; font-weight: 700; }
+
+    .page-hidden { display: none !important; }
+    #login-page, #main-dashboard { width: 100%; }
+
+    .opacity-0 { opacity: 0 !important; }
+    .translate-y-10 { transform: translateY(40px) !important; }
+  </style>
+</head>
+<body>
+
+  <!-- 1. HALAMAN LOGIN (DIJAMIN REKOR TENGAH & INDAH) -->
+  <div id="login-page">
+    <div id="login-card">
+      <div class="text-center mb-8">
+        <h2 class="text-3xl font-extrabold tracking-tight" style="background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">KASIRRR</h2>
+        <p class="text-xs text-slate-400 mt-1">Masuk ke sistem Smart Kasir</p>
       </div>
       
-      <div class="login-field-group">
-        <label>Password</label>
-        <!-- Wrapper input password dengan ikon mata kekinian -->
-        <div style="position: relative; width: 100%;">
-          <input type="password" id="password" placeholder="••••••••" class="w-full" style="padding-right: 45px !important;">
-          <button type="button" onclick="togglePasswordVisibility()" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none !important; border: none !important; box-shadow: none !important; cursor: pointer; padding: 0; color: #6b7280; width: auto !important;">
-            <!-- Ikon Mata Menggunakan Karakter SVG yang Ringan & Kompatibel -->
-            <svg id="eye-icon" xmlns="http://w3.org" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-              <circle cx="12" cy="12" r="3"></circle>
-            </svg>
-          </button>
+      <div class="space-y-4">
+        <div class="login-field-group">
+          <label>Username / ID Karyawan</label>
+          <input type="text" id="username" placeholder="Masukkan username...">
         </div>
+        
+        <div class="login-field-group">
+          <label>Password</label>
+          <div style="position: relative; display: flex; align-items: center; width: 100%;">
+            <input type="password" id="password" placeholder="••••••••" style="padding-right: 85px !important;">
+            <div id="btn-toggle-pwd" onclick="togglePasswordVisibility()" style="position: absolute; right: 12px; height: 100%; display: flex; align-items: center; cursor: pointer; color: #6b7280; font-size: 11px; font-weight: 800; user-select: none; z-index: 30; letter-spacing: 0.05em;">
+              👁️ LIHAT
+            </div>
+          </div>
+        </div>
+        
+        <button type="button" onclick="handleLogin()" class="w-full bg-indigo-600 text-white p-3.5 rounded-xl font-bold hover:opacity-95 transition mt-6 style-button" style="width: 100% !important; border-radius: 10px !important; box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.3) !important;">
+          MASUK SISTEM
+        </button>
       </div>
-      
-      <!-- Tombol Masuk yang Diperkuat Aksinya -->
-      <button onclick="handleLogin()" class="w-full bg-indigo-600 text-white p-3 rounded-lg font-bold hover:opacity-90 transition mt-6" style="display: block !important;">
-        MASUK SISTEM
-      </button>
     </div>
   </div>
-</div>
 
-  <!-- 2. DASHBOARD UTAMA & KASIR (Akan muncul setelah login) -->
+  <!-- 2. DASHBOARD UTAMA & KASIR -->
   <div id="main-dashboard" class="page-hidden flex h-screen overflow-hidden">
-    <!-- Sidebar Navigasi Modul -->
-    <aside class="w-64 bg-slate-850 border-r border-slate-800 flex flex-col justify-between">
-      <div class="p-4">
-        <div class="flex items-center space-x-2 px-2 py-3 border-b border-slate-800">
-          <div class="h-8 w-8 rounded bg-indigo-600 flex items-center justify-center font-bold">OP</div>
+    <!-- Sidebar Navigasi -->
+    <aside class="w-64 bg-white border-r border-gray-200 flex flex-col justify-between p-4">
+      <div>
+        <div class="flex items-center space-x-3 px-2 py-3 border-b border-gray-100">
+          <div class="h-9 w-9 rounded-xl bg-indigo-600 flex items-center justify-center font-bold text-white shadow-md">OP</div>
           <div>
-            <h4 class="font-bold text-sm" id="active-user">Staff M.</h4>
-            <p class="text-xs text-emerald-400" id="active-outlet">Outlet Utama</p>
+            <h4 class="font-bold text-sm text-gray-800" id="active-user">Staff</h4>
+            <p class="text-[11px] text-indigo-600 font-semibold" id="active-outlet">Outlet Utama</p>
           </div>
         </div>
         <nav class="mt-6 space-y-1">
-          <button onclick="switchView('pos')" class="w-full flex items-center space-x-3 p-3 rounded-xl bg-indigo-600 font-medium"><span>🛒 Register / POS</span></button>
-          <button onclick="switchView('inventory')" class="w-full flex items-center space-x-3 p-3 rounded-xl text-slate-400 hover:bg-slate-800"><span>📦 Inventori & Bahan</span></button>
-          <button onclick="switchView('promos')" class="w-full flex items-center space-x-3 p-3 rounded-xl text-slate-400 hover:bg-slate-800"><span>🏷️ Skema Promo</span></button>
-          <button onclick="switchView('reports')" class="w-full flex items-center space-x-3 p-3 rounded-xl text-slate-400 hover:bg-slate-800"><span>📈 Laba Rugi & Laporan</span></button>
+          <button onclick="switchView('pos')" class="w-full flex items-center space-x-3 p-3 rounded-xl bg-indigo-600 text-white font-medium text-sm"><span>🛒 Register / POS</span></button>
+          <button onclick="switchView('inventory')" class="w-full flex items-center space-x-3 p-3 rounded-xl text-gray-600 hover:bg-gray-50 text-sm"><span>📦 Inventori & Bahan</span></button>
+          <button onclick="switchView('reports')" class="w-full flex items-center space-x-3 p-3 rounded-xl text-gray-600 hover:bg-gray-50 text-sm"><span>📈 Laba Rugi & Laporan</span></button>
         </nav>
       </div>
-      <div class="p-4 border-t border-slate-800">
-        <button onclick="handleLogout()" class="w-full p-2 bg-red-900/50 text-red-400 rounded-lg text-sm font-semibold hover:bg-red-900">Keluar / Log Out</button>
-      </div>
+      <button onclick="handleLogout()" class="w-full p-2.5 bg-red-50 text-red-600 rounded-xl text-xs font-bold hover:bg-red-100 transition">Keluar / Log Out</button>
     </aside>
 
-    <!-- Main Workspace -->
-    <main class="flex-1 flex flex-col overflow-hidden bg-slate-950">
-      <!-- Top Action Bar -->
-      <header class="h-16 border-b border-slate-800 flex items-center justify-between px-6 bg-slate-900">
+    <!-- Workspace -->
+    <main class="flex-1 flex flex-col overflow-hidden">
+      <header class="h-16 border-b border-gray-200 flex items-center justify-between px-6 bg-white">
         <div class="flex items-center space-x-4">
-          <input type="text" id="barcode-scanner" placeholder="⌨️ Scan Barcode Alat / Ketik SKU..." class="bg-slate-800 border border-slate-700 px-4 py-2 rounded-lg text-sm w-80 focus:outline-none focus:border-indigo-500">
-          <button onclick="triggerShift('open')" class="text-xs px-3 py-1.5 bg-emerald-600/20 text-emerald-400 rounded-full border border-emerald-500/30">Mulai Shift Kasir</button>
+          <input type="text" id="barcode-scanner" placeholder="⌨️ Scan Barcode / Ketik SKU..." class="border border-gray-200 px-4 py-2 text-sm w-72 rounded-lg">
         </div>
-        <div class="flex items-center space-x-4 text-sm">
-          <span class="text-slate-400">Status Alat Cetak:</span>
-          <span id="printer-status" onclick="connectBluetoothPrinter()" class="cursor-pointer px-2.5 py-1 bg-amber-500/20 text-amber-400 rounded border border-amber-500/30">🔌 Hubungkan Printer Thermal</span>
+        <div class="flex items-center space-x-4 text-xs text-gray-500">
+          <span id="printer-status" class="px-2.5 py-1 bg-amber-50 text-amber-600 rounded-lg border border-amber-200">🔌 Printer Offline</span>
         </div>
       </header>
 
       <!-- VIEW: REGISTER POS -->
       <div id="view-pos" class="flex-1 flex overflow-hidden">
-        <!-- Panel Grid Produk -->
         <div class="w-2/3 p-6 overflow-y-auto space-y-6">
-          <div class="flex space-x-2 overflow-x-auto pb-2">
-            <button class="px-4 py-1.5 bg-indigo-600 rounded-full text-xs font-semibold shrink-0">Semua Kategori</button>
-            <button class="px-4 py-1.5 bg-slate-800 text-slate-400 rounded-full text-xs shrink-0">Makanan Utama</button>
-            <button class="px-4 py-1.5 bg-slate-800 text-slate-400 rounded-full text-xs shrink-0">Minuman/Bar</button>
-          </div>
-          <div class="grid grid-cols-3 gap-4" id="product-grid">
-            <!-- Render Otomatis via JS -->
-          </div>
+          <div class="grid grid-cols-3 gap-4" id="product-grid"></div>
         </div>
-
-        <!-- Panel Checkout / Keranjang -->
-        <div class="w-1/3 bg-slate-900 border-l border-slate-800 flex flex-col justify-between">
+        <div class="w-1/3 bg-white border-l border-gray-200 flex flex-col justify-between">
           <div class="p-4 flex-1 overflow-y-auto">
-            <div class="flex justify-between items-center mb-4">
-              <h3 class="font-bold text-lg text-indigo-400">Keranjang Nota</h3>
-              <select id="select-customer" onchange="applyCustomerTier()" class="bg-slate-800 border border-slate-700 p-1.5 text-xs rounded text-white w-40">
-                <option value="walk-in">Pelanggan Umum</option>
-              </select>
-            </div>
-            <div id="cart-list" class="space-y-3">
-              <!-- Item Belanja Terpilih -->
-            </div>
+            <h3 class="font-bold text-base text-gray-800 mb-4">Keranjang Nota</h3>
+            <div id="cart-list" class="space-y-3"></div>
           </div>
-          <div class="p-4 bg-slate-850 border-t border-slate-800 space-y-3">
-            <div class="text-sm space-y-1.5 text-slate-400">
+          <div class="p-4 bg-gray-50 border-t border-gray-200 space-y-3">
+            <div class="text-xs space-y-1.5 text-gray-500">
               <div class="flex justify-between"><span>Subtotal</span><span id="txt-subtotal">Rp 0</span></div>
-              <div class="flex justify-between text-rose-400"><span>Promo/Diskon Otomatis</span><span id="txt-discount">Rp 0</span></div>
-              <div class="flex justify-between text-indigo-400"><span>Loyalti Poin Berjalan</span><span id="txt-points">+0 Poin</span></div>
+              <div class="flex justify-between text-rose-500"><span>Diskon</span><span id="txt-discount">Rp 0</span></div>
             </div>
-            <div class="flex justify-between text-xl font-black text-white pt-2 border-t border-dashed border-slate-700">
+            <div class="flex justify-between text-lg font-bold text-gray-800 pt-2 border-t border-dashed border-gray-300">
               <span>TOTAL</span><span id="txt-total">Rp 0</span>
             </div>
             <div class="grid grid-cols-2 gap-2 pt-2">
-              <button onclick="processPayment('Tunai')" class="py-3 bg-emerald-600 font-bold rounded-xl hover:bg-emerald-500 transition text-sm">💵 Bayar Tunai</button>
-              <button onclick="processPayment('QRIS')" class="py-3 bg-indigo-600 font-bold rounded-xl hover:bg-indigo-500 transition text-sm">📱 QRIS / E-Wallet</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- VIEW: MODUL INVENTORI & BAHAN -->
-      <div id="view-inventory" class="page-hidden p-6 overflow-y-auto space-y-6">
-        <div class="flex justify-between items-center">
-          <h2 class="text-2xl font-bold">Manajemen Inventori & Baku Bahan</h2>
-          <button onclick="exportToExcel('inventory-table')" class="bg-emerald-600 px-4 py-2 rounded text-sm font-semibold">📥 Export Excel</button>
-        </div>
-        <div class="bg-slate-900 rounded-xl border border-slate-800 overflow-hidden">
-          <table class="w-full text-left border-collapse" id="inventory-table">
-            <thead>
-              <tr class="bg-slate-800 text-slate-400 text-xs uppercase font-bold border-b border-slate-700">
-                <th class="p-4">Bahan Baku / Produk</th>
-                <th class="p-4">Stok Saat Ini</th>
-                <th class="p-4">Satuan Multi</th>
-                <th class="p-4">Status Opname</th>
-              </tr>
-            </thead>
-            <tbody id="inventory-list" class="text-sm divide-y divide-slate-800">
-              <!-- Diisi otomatis dari JS data sheet -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- VIEW: MODUL LAPORAN LABA RUGI & DASHBOARD BUSINESS -->
-      <div id="view-reports" class="page-hidden p-6 overflow-y-auto space-y-6">
-        <h2 class="text-2xl font-bold">Laporan Laba Rugi & Performa Bisnis</h2>
-        <div class="grid grid-cols-3 gap-6">
-          <div class="bg-slate-900 p-6 rounded-xl border border-slate-800">
-            <p class="text-xs text-slate-400 font-semibold uppercase">Total Pendapatan Kotor</p>
-            <h3 class="text-3xl font-black text-indigo-400 mt-2" id="rep-gross">Rp 0</h3>
-          </div>
-          <div class="bg-slate-900 p-6 rounded-xl border border-slate-800">
-            <p class="text-xs text-slate-400 font-semibold uppercase">HPP & Penggunaan Bahan</p>
-            <h3 class="text-3xl font-black text-rose-400 mt-2" id="rep-hpp">Rp 0</h3>
-          </div>
-          <div class="bg-slate-900 p-6 rounded-xl border border-slate-800">
-            <p class="text-xs text-slate-400 font-semibold uppercase">Margin Laba Bersih</p>
-            <h3 class="text-3xl font-black text-emerald-400 mt-2" id="rep-net">Rp 0</h3>
-          </div>
-        </div>
-
-        <!-- SKEMA VISUAL GRAFIK KEKINIAN -->
-        <div class="grid grid-cols-2 gap-6 mt-6">
-          <div class="bg-slate-900 p-6 rounded-xl border border-slate-800">
-            <h4 class="text-sm font-bold text-slate-300 mb-4 uppercase tracking-wider">Tren Penjualan Mingguan</h4>
-            <div class="h-64 relative">
-              <canvas id="salesTrendChart"></canvas>
-            </div>
-          </div>
-          <div class="bg-slate-900 p-6 rounded-xl border border-slate-800">
-            <h4 class="text-sm font-bold text-slate-300 mb-4 uppercase tracking-wider">Kategori Terlaris</h4>
-            <div class="h-64 flex justify-center relative">
-              <canvas id="categoryPieChart"></canvas>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </main>
-  </div>
-
-  <script src="app.js"></script>
-</body>
-</html>
