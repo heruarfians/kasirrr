@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart QR Menu - Order Mandiri</title>
+	<link rel="stylesheet" href="style.css">
+  <script src="https://tailwindcss.com"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased pb-24">
+
+  <!-- Header Menu -->
+  <header class="bg-slate-900 border-b border-slate-800 p-4 sticky top-0 z-50 flex justify-between items-center">
+    <div>
+      <h1 class="text-xl font-black text-indigo-500">Dine-In Smart Menu</h1>
+      <p class="text-xs text-slate-400 font-semibold" id="display-table">Mengidentifikasi Meja...</p>
+    </div>
+    <div class="bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 px-3 py-1 rounded-full text-xs font-bold" id="cart-counter">
+      0 Item
+    </div>
+  </header>
+
+  <!-- Konten Katalog Menu -->
+  <main class="max-w-md mx-auto p-4 space-y-6">
+    <div class="flex space-x-2 overflow-x-auto pb-2 text-xs">
+      <button class="px-4 py-2 bg-indigo-600 rounded-full font-bold shrink-0">Semua</button>
+      <button class="px-4 py-2 bg-slate-800 text-slate-400 rounded-full shrink-0">Makanan</button>
+      <button class="px-4 py-2 bg-slate-800 text-slate-400 rounded-full shrink-0">Minuman</button>
+    </div>
+
+    <!-- Grid Menu Item -->
+    <div class="space-y-3" id="menu-grid">
+      <!-- Mengambil data langsung dari Google Sheets via API -->
+      <div class="text-center text-sm text-slate-500 py-10">Memuat menu lezat untuk Anda...</div>
+    </div>
+  </main>
+
+  <!-- Sticky Bottom Checkout Bar -->
+  <div id="checkout-bar" class="hidden fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-slate-900 border-t border-slate-800 p-4 flex items-center justify-between shadow-2xl z-50">
+    <div>
+      <p class="text-xs text-slate-400">Total Pesanan</p>
+      <p class="text-lg font-black text-emerald-400" id="cart-total">Rp 0</p>
+    </div>
+    <button onclick="submitOrderViaQR()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-6 py-2.5 rounded-xl text-sm transition">
+      🚀 Kirim Ke Dapur
+    </button>
+  </div>
+
+  <script>
+    // MASUKKAN URL API GOOGLE APPS SCRIPT ANDA YANG SAMA DISINI
+    const API_URL = "https://script.google.com/macros/s/AKfycbywgdHVSXaSeaJvzuwzJO39aQRvcNKTOYzgr1lFB15U3kEqmjH7RlZzkO7FNuKnFw10/exec";
+    
+    let menuProducts = [];
+    let qrCart = [];
+    let tableNumber = "Umum/Takeaway";
+
+    // Ambil nomor meja dari parameter URL (?table=Meja_01)
+    function initTable() {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has('table')) {
+        tableNumber = urlParams.get('table').replace('_', ' ');
+      }
+      document.getElementById('display-table').innerText = `📍 Lokasi: ${tableNumber}`;
+    }
+
+    async function loadMenu() {
+      try {
+        let res = await fetch(`${API_URL}?action=get_data`);
+        let db = await res.json();
+        menuProducts = db.products || [];
+        renderMenu();
+      } catch (e) {
+        console.error("Gagal memuat database menu.");
+      }
+    }
+
+    function renderMenu() {
+      let grid = document.getElementById('menu-grid');
+      if(menuProducts.length === 0) {
+        grid.innerHTML = `<p class="text-center text-xs text-slate-500">Menu belum tersedia.</p>`;
+        return;
+      }
+
+      grid.innerHTML = menuProducts.map(p => `
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-3 flex items-center justify-between">
+          <div class="flex-1 pr-3">
+            <h4 class="font-bold text-sm text-slate-200">${p.name}</h4>
+            <p class="text-xs text-indigo-400 mt-0.5 font-medium">Rp ${Number(p.price).toLocaleString('id-ID')}</p>
+          </div>
+          <div id="action-${p.id}">
+            <button onclick="addToQrCart('${p.id}')" class="bg-indigo-600 hover:bg-indigo-500 text-xs font-bold px-3 py-1.5 rounded-lg transition">+ Tambah</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function addToQrCart(productId) {
+      let prod = menuProducts.find(p => p.id === productId);
+      let item = qrCart.find(c => c.id === productId);
+      if (item) {
+        item.qty++;
+      } else {
+        qrCart.push({ ...prod, qty: 1 });
+      }
+      updateQrCartUI();
+    }
+
+    function adjustQrQty(id, amt) {
+      let item = qrCart.find(c => c.id === id);
+      if(item) {
+        item.qty += amt;
+        if(item.qty <= 0) qrCart = qrCart.filter(c => c.id !== id);
+      }
+      updateQrCartUI();
+    }
+
+    function updateQrCartUI() {
+      let totalItems = qrCart.reduce((sum, item) => sum + item.qty, 0);
+      let totalCost = qrCart.reduce((sum, item) => sum + (Number(item.price) * item.qty), 0);
+
+      document.getElementById('cart-counter').innerText = `${totalItems} Item`;
+      document.getElementById('cart-total').innerText = `Rp ${totalCost.toLocaleString('id-ID')}`;
+
+      // Tampilkan/sembunyikan bar checkout bawah
+      let bar = document.getElementById('checkout-bar');
+      if (totalItems > 0) { bar.classList.remove('hidden'); } else { bar.classList.add('hidden'); }
+
+      // Update tombol tambah di list menjadi counter qty
+      menuProducts.forEach(p => {
+        let cartItem = qrCart.find(c => c.id === p.id);
+        let actionDiv = document.getElementById(`action-${p.id}`);
+        if(actionDiv) {
+          if(cartItem) {
+            actionDiv.innerHTML = `
+              <div class="flex items-center space-x-2 bg-slate-800 rounded-lg p-1 text-xs">
+                <button onclick="adjustQrQty('${p.id}', -1)" class="px-2 py-0.5 bg-slate-700 rounded font-bold">-</button>
+                <span class="font-bold px-1">${cartItem.qty}</span>
+                <button onclick="adjustQrQty('${p.id}', 1)" class="px-2 py-0.5 bg-slate-700 rounded font-bold">+</button>
+              </div>
+            `;
+          } else {
+            actionDiv.innerHTML = `<button onclick="addToQrCart('${p.id}')" class="bg-indigo-600 hover:bg-indigo-500 text-xs font-bold px-3 py-1.5 rounded-lg transition">+ Tambah</button>`;
+          }
+        }
+      });
+    }
+
+    async function submitOrderViaQR() {
+      if(qrCart.length === 0) return;
+      
+      let totalCost = qrCart.reduce((sum, item) => sum + (Number(item.price) * item.qty), 0);
+      let txId = "QR-" + Date.now();
+
+      // Struktur data order dikirim ke server Sheets
+      let orderPayload = {
+        action: "save_transaction",
+        txId: txId,
+        outletId: "OUT01", // Default Outlet
+        userId: "QR-ORDER", // Ditandai sebagai pesanan mandiri
+        customerId: tableNumber, // Menyimpan informasi nomor meja pelanggan
+        items: qrCart,
+        subtotal: totalCost,
+        discount: 0,
+        pointsEarned: 0,
+        total: `Rp ${totalCost.toLocaleString('id-ID')}`,
+        paymentMethod: "BELUM BAYAR (QR Order)"
+      };
+
+      try {
+        await fetch(API_URL, {
+          method: "POST",
+          body: JSON.stringify(orderPayload)
+        });
+        
+        alert(`Pesanan #${txId} dari ${tableNumber} berhasil terkirim langsung ke Dapur & Kasir! Silakan tunggu hidangan Anda.`);
+        qrCart = [];
+        updateQrCartUI();
+        renderMenu();
+      } catch (e) {
+        alert("Koneksi sibuk. Silakan coba klik kirim ulang pesanan.");
+      }
+    }
+
+    // Jalankan saat halaman dibuka
+    window.onload = () => {
+      initTable();
+      loadMenu();
+    };
+  </script>
+</body>
+</html>
