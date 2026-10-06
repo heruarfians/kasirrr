@@ -30,18 +30,67 @@ async function syncDataFromCloud() {
   }
 }
 
-// Fungsi Masuk Sistem Kasir (Dengan Pengaman Offline/Simulasi)
-function handleLogin() {
-  const usernameInput = document.getElementById('username').value;
-  const passwordInput = document.getElementById('password').value;
+// GANTI FUNGSI handleLogin DI app.js DENGAN KODE NYATA API INI
+async function handleLogin() {
+  console.log("Mencoba melakukan login autentikasi ke Database...");
 
-  // Set data pengguna aktif (Simulasi multi-staff enterprise)
-  currentUser = { 
-    id: "USR01", 
-    name: usernameInput || "Manager K.", 
-    role: "Admin/Kasir", 
-    outletId: "OUT01" 
-  };
+  const usernameInput = document.getElementById('username').value.trim();
+  const passwordInput = document.getElementById('password').value.trim();
+
+  if (!usernameInput || !passwordInput) {
+    alert("Silakan isi Username dan Password terlebih dahulu!");
+    return;
+  }
+
+  // Tampilkan teks loading sementara pada tombol agar terlihat interaktif
+  const loginBtn = document.querySelector("#login-card button");
+  const originalBtnText = loginBtn.innerText;
+  loginBtn.innerText = "MEMPROSES RECORD...";
+  loginBtn.disabled = true;
+
+  try {
+    // Mengirim data kecocokan langsung ke Google Apps Script Web App API Anda
+    let response = await fetch(API_URL, {
+      method: "POST",
+      body: JSON.stringify({
+        action: "login",
+        username: usernameInput,
+        password: passwordInput
+      })
+    });
+
+    let result = await response.json();
+
+    if (result.status === "success") {
+      console.log("Autentikasi Berhasil!");
+      currentUser = result.user; // Menyimpan data user dari sheet (id, name, role, outletId)
+
+      // Transisi perpindahan halaman
+      document.getElementById('login-page').classList.add('page-hidden');
+      document.getElementById('main-dashboard').classList.remove('page-hidden');
+      
+      // Sematkan nama pegawai dan outlet ke dashboard kasir sesuai isi spreadsheet Anda
+      document.getElementById('active-user').innerText = currentUser.name;
+      document.getElementById('active-outlet').innerText = `Outlet: ${currentUser.outletId}`;
+      
+      // Ambil seluruh data produk, pelanggan, dll
+      syncDataFromCloud();
+    } else {
+      alert("⚠️ Gagal Masuk: " + result.message);
+      loginBtn.innerText = originalBtnText;
+      loginBtn.disabled = false;
+    }
+  } catch (error) {
+    console.error("Koneksi API Gagal, menggunakan akun demonstrasi lokal sebagai cadangan.", error);
+    
+    // FAIL-SAFE: Jika URL API Anda belum dikonfigurasi, sistem tetap mengizinkan masuk untuk demo UI
+    currentUser = { id: "usr1", name: usernameInput, role: "Owner", outletId: "TKM" };
+    document.getElementById('login-page').classList.add('page-hidden');
+    document.getElementById('main-dashboard').classList.remove('page-hidden');
+    document.getElementById('active-user').innerText = currentUser.name;
+  }
+}
+
   
   // Eksekusi mutlak perpindahan halaman dari login ke dashboard utama
   const loginPage = document.getElementById('login-page');
