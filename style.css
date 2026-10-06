@@ -1,22 +1,31 @@
 /* ==========================================
-   KASIRRRPOS PREMIUM MODERN & SLEEK UX STYLESHEET
+   KASIRRRPOS PREMIUM MODERN & LIGHT UX STYLESHEET
    ========================================== */
 
 @import url('https://googleapis.com');
 
 :root {
-  --app-bg: #090d16;           /* Deep Midnight Blue (Sangat Elegan) */
-  --panel-bg: rgba(20, 27, 45, 0.7); /* Transparansi Kaca */
-  --panel-border: rgba(255, 255, 255, 0.06); /* Border Tipis Modern */
+  --app-bg: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%); /* Cerah Bersih & Mempesona */
+  --panel-bg: rgba(255, 255, 255, 0.75); /* Kaca Transparan Cerah */
+  --panel-border: rgba(255, 255, 255, 0.6); /* Border Putih Berpendar */
   --accent-color: #6366f1;     /* Royal Indigo */
-  --accent-gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  --accent-gradient: linear-gradient(135deg, #6366f1 0%, #ec4899 100%); /* Gradasi Violet & Pink */
   --success-color: #10b981;    /* Emerald Mint */
-  --text-primary: #f8fafc;     /* Clean White */
-  --text-secondary: #94a3b8;   /* Muted Slate */
+  --text-primary: #1f2937;     /* Gelap Kontras (Mudah Dibaca) */
+  --text-secondary: #6b7280;   /* Muted Gray */
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 20px;
   --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Base Body Setup */
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  background: var(--app-bg) !important;
+  color: var(--text-primary) !important;
+  letter-spacing: -0.01em;
+  min-height: 100vh;
 }
 
 /* Aturan Khusus Halaman Login Agar Sempurna di Tengah */
@@ -24,21 +33,23 @@
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  min-height: 100vh !important; /* Memaksa tinggi setara layar HP/PC */
+  min-height: 100vh !important;
   width: 100vw !important;
   padding: 20px;
   box-sizing: border-box;
 }
 
-/* Membatasi lebar kotak login agar tidak memanjang ke samping */
+/* Kotak Login Cerah Estetik */
 #login-card {
   width: 100% !important;
-  max-width: 400px !important; /* Ukuran standar kotak login premium */
+  max-width: 400px !important;
   padding: 32px !important;
   background-color: var(--panel-bg) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--panel-border) !important;
   border-radius: var(--radius-md) !important;
-  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7) !important;
+  box-shadow: 0 20px 40px -15px rgba(31, 41, 55, 0.1) !important;
 }
 
 /* Merapikan jarak antar input di dalam kotak login */
@@ -62,44 +73,35 @@
   box-sizing: border-box;
 }
 
-
-/* Base Body Setup */
-body {
-  font-family: 'Plus Jakarta Sans', sans-serif !important;
-  background-color: var(--app-bg) !important;
-  color: var(--text-primary) !important;
-  letter-spacing: -0.01em;
-}
-
-/* Kustomisasi Panel Dashboard & Kartu (Glassmorphism Effect) */
+/* Kustomisasi Panel Dashboard & Kartu (Glassmorphism Light Effect) */
 .bg-slate-800, .bg-slate-900, .bg-slate-850, .bg-slate-950 {
   background-color: var(--panel-bg) !important;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--panel-border) !important;
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5) !important;
+  box-shadow: 0 10px 25px -5px rgba(31, 41, 55, 0.05) !important;
   border-radius: var(--radius-md) !important;
 }
 
 /* Desain Grid Produk & Menu QR Kekinian */
 #product-grid > div, #menu-grid > div {
-  background-color: rgba(255, 255, 255, 0.02) !important;
+  background-color: rgba(255, 255, 255, 0.5) !important;
   border: 1px solid var(--panel-border) !important;
   border-radius: var(--radius-md) !important;
-  box-shadow: none !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02) !important;
   transition: var(--transition-smooth);
 }
 
 #product-grid > div:hover, #menu-grid > div:hover {
   transform: translateY(-4px);
-  background-color: rgba(255, 255, 255, 0.04) !important;
-  border-color: rgba(99, 102, 241, 0.4) !important;
-  box-shadow: 0 12px 20px -8px rgba(99, 102, 241, 0.15) !important;
+  background-color: #ffffff !important;
+  border-color: rgba(99, 102, 241, 0.3) !important;
+  box-shadow: 0 12px 25px -8px rgba(99, 102, 241, 0.12) !important;
 }
 
 /* Ilustrasi Gambar Produk Sementara */
 #product-grid > div .h-24, #menu-grid > div .h-24 {
-  background-color: rgba(255, 255, 255, 0.03) !important;
+  background-color: rgba(0, 0, 0, 0.03) !important;
   border-radius: var(--radius-sm) !important;
   color: var(--text-secondary);
 }
@@ -110,21 +112,21 @@ button {
   text-transform: none !important;
   font-weight: 600 !important;
   border: 1px solid transparent !important;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04) !important;
   border-radius: var(--radius-sm) !important;
   transition: var(--transition-smooth);
 }
 
 button:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15) !important;
 }
 
 button:active {
   transform: translateY(1px);
 }
 
-/* Variasi Warna Tombol Modern */
+/* Variasi Warna Tombol Modern Gradasi */
 .bg-indigo-600 {
   background: var(--accent-gradient) !important;
   color: #ffffff !important;
@@ -142,18 +144,18 @@ button:active {
 }
 
 .bg-slate-700 {
-  background-color: rgba(255, 255, 255, 0.06) !important;
+  background-color: rgba(0, 0, 0, 0.05) !important;
   color: var(--text-primary) !important;
 }
 .bg-slate-700:hover {
-  background-color: rgba(255, 255, 255, 0.1) !important;
+  background-color: rgba(0, 0, 0, 0.08) !important;
 }
 
-/* Form Input & Dropdown Minimalis */
+/* Form Input & Dropdown Minimalis Cerah */
 input[type="text"], input[type="password"], select {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  background-color: rgba(0, 0, 0, 0.2) !important;
-  border: 1px solid var(--panel-border) !important;
+  background-color: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
   border-radius: var(--radius-sm) !important;
   color: var(--text-primary) !important;
   box-shadow: none !important;
@@ -162,37 +164,39 @@ input[type="text"], input[type="password"], select {
 
 input[type="text"]:focus, input[type="password"]:focus, select:focus {
   border-color: var(--accent-color) !important;
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15) !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12) !important;
   outline: none;
 }
 
-/* Judul Logo & Aksen Teks Finansial */
+/* Judul Logo & Aksen Teks Gradasi Mempesona */
 .text-indigo-500 {
-  color: var(--text-primary) !important;
-  background: linear-gradient(120deg, #fff, #94a3b8);
+  color: var(--accent-color) !important;
+  background: var(--accent-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: none !important;
 }
 
 .text-indigo-400, #txt-total, #cart-total {
-  color: #a5b4fc !important; /* Soft Lavender Blue */
+  color: #4f46e5 !important; /* Deep Royal Violet */
+  font-weight: 700;
 }
 
 .text-emerald-400, #rep-net {
-  color: #34d399 !important; /* Mint Soft */
+  color: #047857 !important; /* Deep Mint */
+  font-weight: 700;
 }
 
-/* Kategori Pilihan Menu (Soft Capsule Badge) */
+/* Kategori Pilihan Menu (Capsule Badge Cerah) */
 .rounded-full {
   border-radius: var(--radius-lg) !important;
-  border: 1px solid var(--panel-border) !important;
+  border: 1px solid rgba(0, 0, 0, 0.05) !important;
   transition: var(--transition-smooth);
 }
 
 /* Garis Pembatas Nota */
 .border-dashed {
-  border-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
 }
 
 /* Desain Pop-Up Struk Belanja Minimalis Elegan */
@@ -201,13 +205,13 @@ input[type="text"]:focus, input[type="password"]:focus, select:focus {
   color: #0f172a !important;
   border-radius: var(--radius-md) !important;
   border: 1px solid rgba(0, 0, 0, 0.05) !important;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15) !important;
 }
 #receipt-modal button {
   border-radius: var(--radius-sm) !important;
 }
 
-/* Smooth Scrollbar */
+/* Smooth Scrollbar Cerah */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -216,11 +220,11 @@ input[type="text"]:focus, input[type="password"]:focus, select:focus {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.1);
   border-radius: var(--radius-lg);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.2);
 }
 
 /* Aturan Cetak Kertas */
@@ -241,7 +245,7 @@ input[type="text"]:focus, input[type="password"]:focus, select:focus {
   width: 100%;
 }
 
-/* Efek Transisi Pop Up Notifikasi Stok */
+/* Efek Transisi Pop Up Notifikasi Stok (Toast Cerah Premium) */
 .opacity-0 {
   opacity: 0 !important;
 }
