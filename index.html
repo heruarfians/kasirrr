@@ -6,6 +6,7 @@
   <title>Kasirrr Enter-price</title>
 	<link rel="stylesheet" href="style.css">
   <link rel="manifest" href="manifest.json">
+  <script src="https://jsdelivr.net"></script>
   <script src="https://tailwindcss.com"></script>
   <script src="https://jsdelivr.net"></script>
   <script src="https://cloudflare.com"></script>
@@ -158,6 +159,22 @@
           <div class="bg-slate-900 p-6 rounded-xl border border-slate-800">
             <p class="text-xs text-slate-400 font-semibold uppercase">Margin Laba Bersih</p>
             <h3 class="text-3xl font-black text-emerald-400 mt-2" id="rep-net">Rp 0</h3>
+          </div>
+        </div>
+
+        <!-- SKEMA VISUAL GRAFIK KEKINIAN -->
+        <div class="grid grid-cols-2 gap-6 mt-6">
+          <div class="bg-slate-900 p-6 rounded-xl border border-slate-800">
+            <h4 class="text-sm font-bold text-slate-300 mb-4 uppercase tracking-wider">Tren Penjualan Mingguan</h4>
+            <div class="h-64 relative">
+              <canvas id="salesTrendChart"></canvas>
+            </div>
+          </div>
+          <div class="bg-slate-900 p-6 rounded-xl border border-slate-800">
+            <h4 class="text-sm font-bold text-slate-300 mb-4 uppercase tracking-wider">Kategori Terlaris</h4>
+            <div class="h-64 flex justify-center relative">
+              <canvas id="categoryPieChart"></canvas>
+            </div>
           </div>
         </div>
       </div>
