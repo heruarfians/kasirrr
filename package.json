@@ -1,0 +1,1 @@
+{"name":"kasirrr","version":"2.0.0","private":true,"description":"POS warung berbasis Google Sheets, siap GitHub Pages","scripts":{"build":"node build.cjs","test":"node tests/core.test.cjs && node tests/auth.test.cjs && node tests/adapter.test.cjs && node tests/ui.test.cjs && node tests/xlsx.test.cjs"},"engines":{"node":">=18"}}

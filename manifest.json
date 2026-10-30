@@ -1,16 +1,1 @@
-{
-  "name": "OmniPos Enterprise Cloud",
-  "short_name": "OmniPOS",
-  "start_url": "./index.html",
-  "display": "standalone",
-  "background_color": "#0f172a",
-  "theme_color": "#4f46e5",
-  "orientation": "portrait-primary",
-  "icons": [
-    {
-      "src": "https://flaticon.com",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ]
-}
+{"name":"Kasirrr — Warung TKM","short_name":"Kasirrr","id":"./","start_url":"./","scope":"./","display":"standalone","background_color":"#008080","theme_color":"#008080","lang":"id","icons":[{"src":"./icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any"}]}
