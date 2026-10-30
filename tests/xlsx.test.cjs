@@ -1,0 +1,4 @@
+const assert=require('node:assert/strict'),make=require('../xlsx.js'),bytes=Buffer.from(make([['Nama','Jumlah'],['Bakmie & kopi',15000],['=HYPERLINK("bad")',2]]));
+assert.equal(bytes.readUInt32LE(0),0x04034b50);let p=0,files={};while(bytes.readUInt32LE(p)===0x04034b50){const size=bytes.readUInt32LE(p+18),n=bytes.readUInt16LE(p+26),extra=bytes.readUInt16LE(p+28),name=bytes.subarray(p+30,p+30+n).toString();files[name]=bytes.subarray(p+30+n+extra,p+30+n+extra+size).toString();p+=30+n+extra+size}
+assert.equal(Object.keys(files).length,5);assert.ok(files['xl/worksheets/sheet1.xml'].includes('<v>15000</v>'));assert.ok(files['xl/worksheets/sheet1.xml'].includes('Bakmie &amp; kopi'));assert.ok(!files['xl/worksheets/sheet1.xml'].includes('<f>'));assert.ok(files['xl/worksheets/sheet1.xml'].includes('HYPERLINK'));assert.equal(bytes.readUInt32LE(bytes.length-22),0x06054b50);
+console.log('PASS XLSX: real OOXML ZIP, numeric cells, XML escaping and formula-free strings');
