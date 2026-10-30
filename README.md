@@ -2,7 +2,7 @@
 
 Aplikasi web bertema Windows klasik, responsif untuk HP, dengan Google Sheets sebagai penyimpanan. Frontend tanpa build/dependensi dan siap dipasang di GitHub Pages pada `https://heruarfians.github.io/kasirrr/`.
 
-**Status paket:** pengujian lokal tersedia; koneksi spreadsheet produksi dan pengunggahan GitHub memerlukan akses akun pemilik. URL tujuan bukan bukti versi ini sudah diterbitkan.
+**Status 31 Oktober 2026:** frontend sudah diterbitkan ke GitHub Pages dan halaman login versi 2.0 berhasil diverifikasi. Backend Google Apps Script produksi masih perlu diperbarui oleh pemilik sebelum memakai data asli.
 
 ## Coba aplikasi
 
@@ -97,4 +97,5 @@ Apps Script memakai penguncian, validasi server, request ID, audit dan rollback 
 
 Password disimpan sebagai SHA-256 bersalt agar kompatibel dengan data lama; ini bukan KDF lambat. Gunakan password panjang unik dan lindungi akses edit spreadsheet. Semua akses akun/data aplikasi harus melalui HTTPS dan token sesi (maksimal 6 jam, cache bisa berakhir lebih cepat).
 
-Browser demo diuji untuk login, pemisahan menu Admin/Kasir, ganti akun, shift dan pembayaran/struk. Unit test memeriksa aturan akses, outlet, harga/promo/poin, hutang, persediaan, laporan, pencabutan sesi dan ekspor. Koneksi Google Sheets produksi, pembayaran sungguhan, printer fisik, WhatsApp terkirim, dan publikasi Pages tetap memerlukan verifikasi setelah pemasangan akun pemilik.
+Browser demo diuji untuk login, pemisahan menu Admin/Kasir, ganti akun, shift dan pembayaran/struk. Unit test memeriksa aturan akses, outlet, harga/promo/poin, hutang, persediaan, laporan, pencabutan sesi dan ekspor. Halaman login GitHub Pages juga sudah diverifikasi. Koneksi Google Sheets produksi, pembayaran sungguhan, printer fisik, dan WhatsApp terkirim tetap memerlukan verifikasi setelah pemasangan akun pemilik.
+
