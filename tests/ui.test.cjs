@@ -8,6 +8,7 @@ run("isDemo=true;demoDB=makeDemo();user=demoDB.Users[0];refreshDemo();enter()");
 for(const menu of POS.MENUS){run('navigate('+JSON.stringify(menu)+')');assert.ok(el('#content').innerHTML.length>30,menu)}
 run("navigate('Pengguna');userForm(1)");assert.ok(el('#modalBody').innerHTML.includes('<select name="outletId"'));assert.ok(el('#modalBody').innerHTML.includes('data-edit="true"'));
 run("navigate('Outlet');editRecord('outlets',0)");assert.ok(el('#modalBody').innerHTML.includes('<select name="Status"'));assert.ok(el('#modalBody').innerHTML.includes('Tutup'));
+run("receipt({txId:'TEST',invoice:'TEST',outletId:'TKM',timestamp:'2026-10-31T01:00:00Z',tanggal:'2026-10-31',total:0,subtotal:0,bayar:0,kembalian:0,metode_bayar:'Tunai',status:'Lunas',userId:'Admin'})");assert.ok(el('#modalBody').innerHTML.includes('Pratinjau nota WhatsApp'));assert.ok(el('#modalBody').innerHTML.includes('*FAKTUR ELEKTRONIK*'));
 run("user=demoDB.Users[2];refreshDemo();enter()");assert.ok(!el('#nav').innerHTML.includes('Pengaturan'));assert.ok(!el('#nav').innerHTML.includes('Bahan'));
 run("navigate('Pengaturan')");assert.ok(el('#pageTitle').textContent==='Kasir');
 run("lockScreen()");assert.equal(el('#application').hidden,true);assert.equal(el('#loginScreen').hidden,false);
