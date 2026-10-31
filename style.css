@@ -5,3 +5,4 @@
 @media(max-width:1000px){.settings-grid{grid-template-columns:1fr}}@media(max-width:800px){nav{max-height:none}.toolbar{flex-wrap:wrap}.toolbar input{flex-basis:100%}.stat strong{font-size:15px}.settings-grid{gap:14px}.product-list .product-info{grid-template-columns:1fr 110px}.report-filter{display:grid;grid-template-columns:1fr 1fr}.report-filter .field{min-width:0}.heading button{max-width:100px}}
 @media print{dialog form,dialog button,dialog .note{display:none!important}dialog[open]{width:auto!important;max-width:none!important}#modalBody{max-height:none!important;overflow:visible!important}.receipt{color:black;box-shadow:none}footer{display:none!important}}
 
+.wa-note{margin:18px 0}.wa-note summary{cursor:pointer;font-size:12px}.wa-preview{white-space:pre-wrap;overflow-wrap:anywhere;background:#dcf8c6;color:#111;border:1px solid #9dbd90;padding:16px;font:13px/1.6 'Segoe UI',sans-serif;text-align:left}

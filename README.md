@@ -99,3 +99,6 @@ Password disimpan sebagai SHA-256 bersalt agar kompatibel dengan data lama; ini 
 
 Browser demo diuji untuk login, pemisahan menu Admin/Kasir, ganti akun, shift dan pembayaran/struk. Unit test memeriksa aturan akses, outlet, harga/promo/poin, hutang, persediaan, laporan, pencabutan sesi dan ekspor. Halaman login GitHub Pages juga sudah diverifikasi. Koneksi Google Sheets produksi, pembayaran sungguhan, printer fisik, dan WhatsApp terkirim tetap memerlukan verifikasi setelah pemasangan akun pemilik.
 
+
+### Pembaruan template nota WhatsApp
+Nota mengikuti format faktur elektronik: outlet/alamat/kontak, kasir shift, nomor nota, tanggal dan jam WIB, rincian qty/satuan/harga, subtotal, diskon, total, pembayaran, kembalian dan status. Pratinjau tersedia pada detail nota. Nomor antrean ditampilkan hanya jika ada dalam transaksi. Tidak ada tautan faktur yang diklaim tersedia. Pembaruan ini hanya frontend; tidak perlu redeploy Apps Script.
